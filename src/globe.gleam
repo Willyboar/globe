@@ -1,6 +1,6 @@
 import globe/cli
 
-const version = "1.0.0"
+const version = "0.2.0"
 
 pub fn main() -> Nil {
   cli.run(version)

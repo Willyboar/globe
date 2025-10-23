@@ -1,11 +1,12 @@
 //// High-level compilation pipeline for Globe IL.
+
 import gleam/option.{type Option, None, Some}
 import gleam/result
 import globe/codegen
 import globe/fs
 import globe/parser
-import globe/types
 import globe/path
+import globe/types
 
 /// Options governing compilation behaviour.
 pub type CompileOptions {
@@ -35,7 +36,10 @@ pub type CompileError {
 }
 
 /// Compiles the provided SSA file according to the specification.
-pub fn compile(path: String, options: CompileOptions) -> Result(CompilationOutcome, CompileError) {
+pub fn compile(
+  path: String,
+  options: CompileOptions,
+) -> Result(CompilationOutcome, CompileError) {
   fs.read(path)
   |> result.map_error(SourceRead)
   |> result.try(fn(source) {
