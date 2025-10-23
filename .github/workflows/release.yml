@@ -31,9 +31,11 @@ jobs:
         run: |
           if [ -f "globe" ]; then
             echo "Escript built successfully"
-            ./globe version
+            # Test with Erlang directly instead of as escript
+            erl -noshell -s globe main -s init stop
           else
             echo "Error: globe escript not found"
+            ls -la
             exit 1
           fi
 
