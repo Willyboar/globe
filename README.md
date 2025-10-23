@@ -36,7 +36,7 @@ The documentation covers:
 ### From Source
 
 ```sh
-git clone https://github.com/yourusername/globe.git
+git clone https://github.com/Willyboar/globe.git
 cd globe
 gleam build
 gleam run -m gleescript
@@ -46,7 +46,7 @@ This creates an executable `./globe` escript.
 
 ### From Release
 
-Download the pre-built `globe` binary from the [releases page](https://github.com/yourusername/globe/releases), make it executable, and add it to your PATH:
+Download the pre-built `globe` binary from the [releases page](https://github.com/Willyboar/globe/releases), make it executable, and add it to your PATH:
 
 ```sh
 chmod +x globe
