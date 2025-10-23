@@ -1,0 +1,37 @@
+module @string_utils
+  
+// String manipulation using Erlang's string module
+  
+// Convert string to uppercase
+export function @uppercase(@str: string) -> string {
+    @start:
+    @upper = external string uppercase(@str)
+  ret @upper
+}
+  
+// Convert string to lowercase
+export function @lowercase(@str: string) -> string {
+    @start:
+    @lower = external string lowercase(@str)
+  ret @lower
+}
+  
+// Get string length
+export function @str_length(@str: string) -> int {
+    @start:
+    @len = bif length(@str)
+  ret @len
+}
+  
+// Trim whitespace from string
+export function @trim(@str: string) -> string {
+    @start:
+    @trimmed = external string trim(@str)
+  ret @trimmed
+}
+  
+export function @main() -> int {
+    @start:
+    @zero = const 0
+  ret @zero
+}

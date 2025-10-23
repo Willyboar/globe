@@ -1,0 +1,10 @@
+module @demo
+  
+// Demonstrates using Erlang's io:format/1 to print output
+export function @main() -> int {
+    @start:
+    @msg = const "Hello from Globe IL with external calls!~n"
+    @ok = external io format(@msg)
+    @zero = const 0
+  ret @zero
+}

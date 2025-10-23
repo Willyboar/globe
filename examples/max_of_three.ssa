@@ -1,0 +1,31 @@
+module @comparisons
+  
+// Find maximum of two numbers
+function @max(@a: int, @b: int) -> int {
+    @start:
+    @cond = cmp gt @a @b
+  jump_if @cond @return_a @return_b
+  
+    @return_a:
+  ret @a
+  
+    @return_b:
+  ret @b
+}
+  
+// Find maximum of three numbers
+export function @max3(@a: int, @b: int, @c: int) -> int {
+    @start:
+    @max_ab = call @max(@a, @b)
+    @max_abc = call @max(@max_ab, @c)
+  ret @max_abc
+}
+  
+export function @main() -> int {
+    @start:
+    @x = const 42
+    @y = const 17
+    @z = const 99
+    @result = call @max3(@x, @y, @z)
+  ret @result
+}

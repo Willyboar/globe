@@ -1,0 +1,31 @@
+module @tail_factorial
+  
+// Tail-recursive factorial implementation with accumulator
+function @factorial_helper(@n: int, @acc: int) -> int {
+    @start:
+    @one = const 1
+    @is_one_or_less = cmp lte @n @one
+  jump_if @is_one_or_less @base_case @recursive_case
+  
+    @base_case:
+  ret @acc
+  
+    @recursive_case:
+    @n_minus_1 = sub @n @one
+    @new_acc = mul @n @acc
+  tail_call @factorial_helper(@n_minus_1, @new_acc)
+}
+  
+export function @factorial(@n: int) -> int {
+    @start:
+    @one = const 1
+    @result = call @factorial_helper(@n, @one)
+  ret @result
+}
+  
+export function @main() -> int {
+    @start:
+    @ten = const 10
+    @result = call @factorial(@ten)
+  ret @result
+}

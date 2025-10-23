@@ -1,0 +1,30 @@
+module @interop
+  
+// Demonstrates various Erlang interop features
+  
+// Using external to call lists:reverse/1
+export function @reverse(@n: int) -> int {
+    @start:
+    @result = external erlang abs(@n)
+  ret @result
+}
+  
+// Using bif to call a built-in function like length/1
+export function @string_length(@str: string) -> int {
+    @start:
+    @len = bif length(@str)
+  ret @len
+}
+  
+// Main function demonstrating both external and bif
+export function @main() -> int {
+    @start:
+    @neg_five = const -5
+    @abs_value = call @reverse(@neg_five)
+  
+    @msg = const "Hello"
+    @len = call @string_length(@msg)
+  
+    @result = add @abs_value @len
+  ret @result
+}

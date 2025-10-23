@@ -1,0 +1,27 @@
+module @power
+  
+// Calculate base^exponent using recursion
+export function @pow(@base: int, @exp: int) -> int {
+    @start:
+    @zero = const 0
+    @one = const 1
+    @is_zero = cmp eq @exp @zero
+  jump_if @is_zero @return_one @recursive
+  
+    @return_one:
+  ret @one
+  
+    @recursive:
+    @exp_minus_1 = sub @exp @one
+    @sub_result = call @pow(@base, @exp_minus_1)
+    @result = mul @base @sub_result
+  ret @result
+}
+  
+export function @main() -> int {
+    @start:
+    @base = const 2
+    @exp = const 10
+    @result = call @pow(@base, @exp)
+  ret @result
+}

@@ -1,0 +1,18 @@
+module @pattern_matching_variables
+  
+export function @identity(@x: int) -> int {
+    @entry:
+    match @x { @value: @captured }
+  
+    @captured:
+    ret @value
+}
+  
+export function @always_return_42(@x: int) -> int {
+    @entry:
+    match @x { _: @ignore_value }
+  
+    @ignore_value:
+    @result = const 42
+    ret @result
+}

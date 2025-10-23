@@ -1,0 +1,17 @@
+module @process_send_receive
+  
+function @echo_loop() -> atom {
+    @start:
+    receive { @msg: @handle_message }
+  
+    @handle_message:
+    ret @msg
+}
+  
+export function @main() -> atom {
+    @start:
+    @pid = spawn @echo_loop()
+    @message = const atom hello
+    send @pid @message
+    ret atom ok
+}

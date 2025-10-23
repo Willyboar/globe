@@ -1,0 +1,59 @@
+module @parity
+  
+// Check if number is even using mutual recursion
+export function @is_even(@n: int) -> int {
+    @start:
+    @zero = const 0
+    @one = const 1
+    @is_zero = cmp eq @n @zero
+  jump_if @is_zero @return_true @check_negative
+  
+    @check_negative:
+    @is_negative = cmp lt @n @zero
+  jump_if @is_negative @make_positive @continue
+  
+    @make_positive:
+    @zero_minus_n = sub @zero @n
+    @result = call @is_even(@zero_minus_n)
+  ret @result
+  
+    @continue:
+    @n_minus_1 = sub @n @one
+    @result = call @is_odd(@n_minus_1)
+  ret @result
+  
+    @return_true:
+  ret @one
+}
+  
+function @is_odd(@n: int) -> int {
+    @start:
+    @zero = const 0
+    @one = const 1
+    @is_zero = cmp eq @n @zero
+  jump_if @is_zero @return_false @check_negative
+  
+    @check_negative:
+    @is_negative = cmp lt @n @zero
+  jump_if @is_negative @make_positive @continue
+  
+    @make_positive:
+    @zero_minus_n = sub @zero @n
+    @result = call @is_odd(@zero_minus_n)
+  ret @result
+  
+    @continue:
+    @n_minus_1 = sub @n @one
+    @result = call @is_even(@n_minus_1)
+  ret @result
+  
+    @return_false:
+  ret @zero
+}
+  
+export function @main() -> int {
+    @start:
+    @num = const 42
+    @result = call @is_even(@num)
+  ret @result
+}

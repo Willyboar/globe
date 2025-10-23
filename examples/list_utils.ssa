@@ -1,0 +1,37 @@
+module @list_utils
+  
+// Demonstrate Erlang list manipulation via external calls
+  
+// Reverse a list using Erlang's lists:reverse/1
+export function @reverse(@list: list) -> list {
+    @start:
+    @reversed = external lists reverse(@list)
+  ret @reversed
+}
+  
+// Get list length using BIF
+export function @length(@list: list) -> int {
+    @start:
+    @len = bif length(@list)
+  ret @len
+}
+  
+// Append two lists using Erlang's lists:append/2
+export function @append(@list1: list, @list2: list) -> list {
+    @start:
+    @result = external lists append(@list1, @list2)
+  ret @result
+}
+  
+// Sort a list using Erlang's lists:sort/1
+export function @sort(@list: list) -> list {
+    @start:
+    @sorted = external lists sort(@list)
+  ret @sorted
+}
+  
+export function @main() -> int {
+    @start:
+    @zero = const 0
+  ret @zero
+}

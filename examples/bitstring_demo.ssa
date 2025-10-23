@@ -1,0 +1,31 @@
+module @bitstrings
+  
+// Create an RGB color value as a 24-bit bitstring
+export function @make_rgb(@r: int, @g: int, @b: int) -> bitstring {
+    @start:
+    @rgb = bitstring_build [@r 8, @g 8, @b 8]
+  ret @rgb
+}
+  
+// Create a boolean flags bitstring
+export function @make_flags(@flag1: int, @flag2: int, @flag3: int) -> bitstring {
+    @start:
+    @flags = bitstring_build [@flag1 1, @flag2 1, @flag3 1]
+  ret @flags
+}
+  
+export function @main() -> int {
+    @start:
+    @red = const 255
+    @green = const 128
+    @blue = const 64
+    @rgb = call @make_rgb(@red, @green, @blue)
+  
+    @f1 = const 1
+    @f2 = const 0
+    @f3 = const 1
+    @flags = call @make_flags(@f1, @f2, @f3)
+  
+    @zero = const 0
+  ret @zero
+}

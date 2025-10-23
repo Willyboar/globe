@@ -1,0 +1,30 @@
+module @pattern_matching_nested_tuples
+  
+// Test nested tuple patterns
+export function @get_nested_first(@nested: tuple) -> int {
+    @entry:
+    match @nested { {{@x, @y}, @z}: @return_x }
+    @return_x:
+    ret @x
+}
+  
+export function @get_nested_second(@nested: tuple) -> int {
+    @entry:
+    match @nested { {{@x, @y}, @z}: @return_y }
+    @return_y:
+    ret @y
+}
+  
+export function @get_outer(@nested: tuple) -> int {
+    @entry:
+    match @nested { {{@x, @y}, @z}: @return_z }
+    @return_z:
+    ret @z
+}
+  
+export function @match_nested_with_wildcard(@data: tuple) -> int {
+    @entry:
+    match @data { {{@a, _}, _}: @return_a }
+    @return_a:
+    ret @a
+}

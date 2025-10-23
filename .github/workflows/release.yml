@@ -1,0 +1,84 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Erlang/OTP and Gleam
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: "28"
+          gleam-version: "1.13.0"
+          rebar3-version: "3"
+
+      - name: Download dependencies
+        run: gleam deps download
+
+      - name: Build escript
+        run: gleam run -m gleescript
+
+      - name: Verify escript was created
+        run: |
+          if [ -f "globe" ]; then
+            echo "Escript built successfully"
+            ./globe version
+          else
+            echo "Error: globe escript not found"
+            exit 1
+          fi
+
+      - name: Upload escript to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./globe
+          asset_name: globe
+          asset_content_type: application/octet-stream
+
+      - name: Create installation instructions
+        run: |
+          cat > INSTALL.txt << 'EOF'
+          Globe IL Compiler Installation
+          ================================
+
+          To install Globe:
+
+          1. Download the 'globe' binary from this release
+          2. Make it executable: chmod +x globe
+          3. Move it to your PATH: sudo mv globe /usr/local/bin/
+          4. Verify installation: globe version
+
+          Usage:
+            globe help                         Show help
+            globe version                      Show version
+            globe compile <input.ssa> [--run]  Compile SSA input to BEAM
+
+          Examples:
+            globe compile examples/hello.ssa
+            globe compile examples/factorial.ssa --run
+
+          Requirements:
+            - Erlang/OTP 26+ installed on your system (tested with OTP 28)
+          EOF
+
+      - name: Upload installation instructions
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./INSTALL.txt
+          asset_name: INSTALL.txt
+          asset_content_type: text/plain

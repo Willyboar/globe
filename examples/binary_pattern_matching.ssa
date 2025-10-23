@@ -1,0 +1,70 @@
+module @binary_pattern_matching
+  
+// Test basic binary pattern with literal prefix
+export function @match_prefix(@data: binary) -> int {
+    @entry:
+    match @data { <<"hello", @rest/binary>>: @has_prefix, _: @no_prefix }
+    @has_prefix:
+    @one = const 1
+    ret @one
+    @no_prefix:
+    @zero = const 0
+    ret @zero
+}
+  
+// Test binary pattern with sized integer extraction
+export function @parse_header(@packet: binary) -> int {
+    @entry:
+    match @packet { <<@header:8, @body/binary>>: @got_header, _: @invalid }
+    @got_header:
+    ret @header
+    @invalid:
+    @neg = const -1
+    ret @neg
+}
+  
+// Test binary pattern with 16-bit integer
+export function @parse_length(@data: binary) -> int {
+    @entry:
+    match @data { <<@len:16, @rest/binary>>: @got_len, _: @bad_data }
+    @got_len:
+    ret @len
+    @bad_data:
+    @zero = const 0
+    ret @zero
+}
+  
+// Test binary pattern with multiple sized fields
+export function @parse_rgb(@color: binary) -> int {
+    @entry:
+    match @color { <<@r:8, @g:8, @b:8>>: @valid_rgb, _: @invalid_rgb }
+    @valid_rgb:
+    ret @r
+    @invalid_rgb:
+    @neg = const -1
+    ret @neg
+}
+  
+// Test binary pattern with rest of binary
+export function @skip_bytes(@data: binary) -> binary {
+    @entry:
+    match @data { <<@skip:16, @rest/binary>>: @return_rest, _: @return_empty }
+    @return_rest:
+    ret @rest
+    @return_empty:
+    @empty = const ""
+    ret @empty
+}
+  
+// Test complex binary pattern (protocol parsing)
+export function @parse_message(@msg: binary) -> int {
+    @entry:
+    match @msg { <<1:8, @len:16, @payload/binary>>: @type1, <<2:8, @value:32>>: @type2, _: @unknown }
+    @type1:
+    ret @len
+    @type2:
+    ret @value
+    @unknown:
+    @neg = const -1
+    ret @neg
+}

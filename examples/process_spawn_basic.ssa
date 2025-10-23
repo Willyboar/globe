@@ -1,0 +1,13 @@
+module @process_spawn_basic
+  
+function @worker(@message: atom) -> atom {
+    @start:
+    ret @message
+}
+  
+export function @main() -> atom {
+    @start:
+    @msg = const atom hello
+    @pid = spawn @worker(@msg)
+    ret @pid
+}

@@ -1,0 +1,39 @@
+module @io_examples
+
+// Print a simple message
+export function @print_hello() -> atom {
+  @start:
+  @msg = const "Hello, Globe IL!~n"
+  @ok = external io format(@msg)
+  ret @ok
+}
+
+// Print a number
+export function @print_number(@n: int) -> atom {
+  @start:
+  @format = const "The number is: ~p~n"
+  @args = list @n
+  @ok = external io format(@format, @args)
+  ret @ok
+}
+
+// Print multiple values
+export function @print_values(@x: int, @y: int) -> atom {
+  @start:
+  @format = const "X = ~p, Y = ~p~n"
+  @args = list @x @y
+  @ok = external io format(@format, @args)
+  ret @ok
+}
+
+export function @main() -> int {
+  @start:
+  call @print_hello()
+  @num = const 42
+  call @print_number(@num)
+  @x = const 10
+  @y = const 20
+  call @print_values(@x, @y)
+  @zero = const 0
+  ret @zero
+}

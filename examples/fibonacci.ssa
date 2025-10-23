@@ -1,0 +1,36 @@
+module @fibonacci
+  
+// Recursive fibonacci implementation
+export function @fib(@n: int) -> int {
+    @start:
+    @zero = const 0
+    @one = const 1
+    @two = const 2
+    @cond_zero = cmp eq @n @zero
+  jump_if @cond_zero @return_zero @check_one
+  
+    @return_zero:
+  ret @zero
+  
+    @check_one:
+    @cond_one = cmp eq @n @one
+  jump_if @cond_one @return_one @recursive
+  
+    @return_one:
+  ret @one
+  
+    @recursive:
+    @n_minus_1 = sub @n @one
+    @n_minus_2 = sub @n @two
+    @fib_n1 = call @fib(@n_minus_1)
+    @fib_n2 = call @fib(@n_minus_2)
+    @result = add @fib_n1 @fib_n2
+  ret @result
+}
+  
+export function @main() -> int {
+    @start:
+    @ten = const 10
+    @result = call @fib(@ten)
+  ret @result
+}

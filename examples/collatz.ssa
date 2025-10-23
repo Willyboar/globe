@@ -1,0 +1,43 @@
+module @collatz
+  
+// Calculate the Collatz sequence length
+// (also known as the 3n+1 problem)
+export function @collatz_length(@n: int) -> int {
+    @start:
+    @one = const 1
+    @two = const 2
+    @three = const 3
+    @is_one = cmp eq @n @one
+  jump_if @is_one @base_case @check_even
+  
+    @base_case:
+  ret @one
+  
+    @check_even:
+    @quotient = div @n @two
+    @product = mul @quotient @two
+    @remainder = sub @n @product
+    @zero = const 0
+    @is_even = cmp eq @remainder @zero
+  jump_if @is_even @even_case @odd_case
+  
+    @even_case:
+    @half = div @n @two
+    @sub_length = call @collatz_length(@half)
+    @result = add @sub_length @one
+  ret @result
+  
+    @odd_case:
+    @times_three = mul @n @three
+    @plus_one = add @times_three @one
+    @sub_length_odd = call @collatz_length(@plus_one)
+    @result_odd = add @sub_length_odd @one
+  ret @result_odd
+}
+  
+export function @main() -> int {
+    @start:
+    @twenty_seven = const 27
+    @result = call @collatz_length(@twenty_seven)
+  ret @result
+}

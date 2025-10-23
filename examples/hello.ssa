@@ -1,0 +1,7 @@
+module @hello
+
+export function @main() -> int {
+  @start:
+  @zero = const 0
+  ret @zero
+}

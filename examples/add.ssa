@@ -1,0 +1,13 @@
+module @math
+  
+export function @add(@left: int, @right: int) -> int {
+    @start:
+    @result = add @left @right
+  ret @result
+}
+  
+export function @main() -> int {
+    @start:
+    @sum = call @add(21, 21)
+  ret @sum
+}

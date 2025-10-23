@@ -1,0 +1,44 @@
+module @bitstring_operations
+  
+// Test bitstring_extract operation
+export function @extract_bits(@bits: bitstring, @pos: int, @size: int) -> int {
+    @start:
+    @result = bitstring_extract @bits @pos @size
+    ret @result
+}
+  
+// Test bitstring_update operation
+export function @update_bits(@bits: bitstring, @pos: int, @val: int, @size: int) -> bitstring {
+    @start:
+    @result = bitstring_update @bits @pos @val @size
+    ret @result
+}
+  
+// Test extracting specific bit ranges
+export function @get_flag(@bits: bitstring, @flag_pos: int) -> int {
+    @start:
+    @one = const 1
+    @flag = bitstring_extract @bits @flag_pos @one
+    ret @flag
+}
+  
+// Test setting a flag bit
+export function @set_flag(@bits: bitstring, @pos: int, @value: int) -> bitstring {
+    @start:
+    @one = const 1
+    @result = bitstring_update @bits @pos @value @one
+    ret @result
+}
+  
+// Test building and extracting bitstring
+export function @encode_decode(@r: int, @g: int, @b: int) -> int {
+    @start:
+    // Build RGB bitstring (8 bits each)
+    @rgb = bitstring_build [@r 8, @g 8, @b 8]
+  
+    // Extract green channel (8 bits at position 8)
+    @eight = const 8
+    @green = bitstring_extract @rgb @eight @eight
+  
+    ret @green
+}

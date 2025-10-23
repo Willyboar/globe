@@ -1,0 +1,18 @@
+module @process_with_timeout
+  
+function @server_loop() -> atom {
+    @start:
+    receive { @msg: @handle_msg, after 1000: @timeout }
+  
+    @handle_msg:
+    tail_call @server_loop()
+  
+    @timeout:
+    ret atom timeout
+}
+  
+export function @main() -> atom {
+    @start:
+    @pid = spawn @server_loop()
+    ret @pid
+}

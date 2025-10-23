@@ -1,0 +1,38 @@
+module @ackermann
+  
+// The Ackermann function - a classic recursive function
+export function @ackermann(@m: int, @n: int) -> int {
+    @start:
+    @zero = const 0
+    @one = const 1
+    @m_is_zero = cmp eq @m @zero
+  jump_if @m_is_zero @m_zero_case @check_n
+  
+    @m_zero_case:
+    @result = add @n @one
+  ret @result
+  
+    @check_n:
+    @n_is_zero = cmp eq @n @zero
+  jump_if @n_is_zero @n_zero_case @general_case
+  
+    @n_zero_case:
+    @m_minus_1 = sub @m @one
+    @result = call @ackermann(@m_minus_1, @one)
+  ret @result
+  
+    @general_case:
+    @m_minus_1_2 = sub @m @one
+    @n_minus_1 = sub @n @one
+    @inner = call @ackermann(@m, @n_minus_1)
+    @result = call @ackermann(@m_minus_1_2, @inner)
+  ret @result
+}
+  
+export function @main() -> int {
+    @start:
+    @three = const 3
+    @four = const 4
+    @result = call @ackermann(@three, @four)
+  ret @result
+}

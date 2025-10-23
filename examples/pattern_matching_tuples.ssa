@@ -1,0 +1,35 @@
+module @pattern_matching_tuples
+  
+export function @get_first(@pair: tuple) -> int {
+    @entry:
+    match @pair { {@x, _}: @return_first }
+  
+    @return_first:
+    ret @x
+}
+  
+export function @get_second(@pair: tuple) -> int {
+    @entry:
+    match @pair { {_, @y}: @return_second }
+  
+    @return_second:
+    ret @y
+}
+  
+export function @swap(@pair: tuple) -> tuple {
+    @entry:
+    match @pair { {@a, @b}: @do_swap }
+  
+    @do_swap:
+    @result = tuple 2 @b @a
+    ret @result
+}
+  
+export function @sum_pair(@pair: tuple) -> int {
+    @entry:
+    match @pair { {@x, @y}: @do_sum }
+  
+    @do_sum:
+    @result = add @x @y
+    ret @result
+}

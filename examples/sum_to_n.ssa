@@ -1,0 +1,26 @@
+module @sum
+  
+// Calculate sum from 1 to n
+export function @sum_to_n(@n: int) -> int {
+    @start:
+    @zero = const 0
+    @one = const 1
+    @is_zero = cmp lte @n @zero
+  jump_if @is_zero @return_zero @recursive
+  
+    @return_zero:
+  ret @zero
+  
+    @recursive:
+    @n_minus_1 = sub @n @one
+    @sub_sum = call @sum_to_n(@n_minus_1)
+    @result = add @n @sub_sum
+  ret @result
+}
+  
+export function @main() -> int {
+    @start:
+    @hundred = const 100
+    @result = call @sum_to_n(@hundred)
+  ret @result
+}

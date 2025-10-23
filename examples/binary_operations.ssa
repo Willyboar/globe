@@ -1,0 +1,37 @@
+module @binary_operations
+  
+// Test binary_set operation
+export function @set_byte(@bin: binary, @pos: int, @val: int) -> binary {
+    @start:
+    @result = binary_set @bin @pos @val
+    ret @result
+}
+  
+// Test combining binary operations
+export function @modify_binary(@data: binary) -> binary {
+    @start:
+    @zero = const 0
+    @one = const 1
+    @byte_a = const 65
+    @byte_b = const 66
+  
+    // Set first byte to 'A' (65)
+    @step1 = binary_set @data @zero @byte_a
+  
+    // Set second byte to 'B' (66)
+    @step2 = binary_set @step1 @one @byte_b
+  
+    ret @step2
+}
+  
+// Test binary size and slice with binary_set
+export function @replace_middle(@bin: binary) -> binary {
+    @start:
+    @size = binary_size @bin
+    @two = const 2
+    @mid = div @size @two
+    @new_val = const 88
+  
+    @result = binary_set @bin @mid @new_val
+    ret @result
+}

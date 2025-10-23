@@ -1,0 +1,71 @@
+module @pattern_matching_control_flow
+  
+export function @factorial(@n: int) -> int {
+    @entry:
+    match @n {
+        0: @base_case,
+        1: @base_case,
+        @num: @recursive_case
+    }
+  
+    @base_case:
+    ret 1
+  
+    @recursive_case:
+    @n_minus_1 = sub @num 1
+    @fact_n_minus_1 = call @factorial(@n_minus_1)
+    @result = mul @num @fact_n_minus_1
+    ret @result
+}
+  
+export function @fibonacci(@n: int) -> int {
+    @entry:
+    match @n {
+        0: @fib_0,
+        1: @fib_1,
+        @num: @fib_n
+    }
+  
+    @fib_0:
+    ret 0
+  
+    @fib_1:
+    ret 1
+  
+    @fib_n:
+    @n_minus_1 = sub @num 1
+    @n_minus_2 = sub @num 2
+    @fib_n1 = call @fibonacci(@n_minus_1)
+    @fib_n2 = call @fibonacci(@n_minus_2)
+    @result = add @fib_n1 @fib_n2
+    ret @result
+}
+  
+export function @is_even(@n: int) -> atom {
+    @entry:
+    match @n {
+        0: @even,
+        1: @odd,
+        @num: @check_recursively
+    }
+  
+    @even:
+    ret :true
+  
+    @odd:
+    ret :false
+  
+    @check_recursively:
+    @n_minus_2 = sub @num 2
+    @cmp = compare_lt @n_minus_2 0
+    jump_if @cmp @negative @continue
+  
+    @negative:
+    @abs_val = sub 0 @n_minus_2
+    @result = call @is_even(@abs_val)
+    ret @result
+  
+    @continue:
+    @result = call @is_even(@n_minus_2)
+    ret @result
+}

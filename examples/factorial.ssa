@@ -1,0 +1,26 @@
+module @factorial
+
+export function @factorial(@n: int) -> int {
+  @start:
+  @zero = const 0
+  @is_zero = cmp eq @n @zero
+  jump_if @is_zero @base_case @recursive_case
+
+  @base_case:
+  @one = const 1
+  ret @one
+
+  @recursive_case:
+  @one_r = const 1
+  @n_minus_1 = sub @n @one_r
+  @sub_result = call @factorial(@n_minus_1)
+  @result = mul @n @sub_result
+  ret @result
+}
+
+export function @main() -> int {
+  @start:
+  @five = const 5
+  @result = call @factorial(@five)
+  ret @result
+}

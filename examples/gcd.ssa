@@ -1,0 +1,34 @@
+module @euclidean
+  
+// Greatest Common Divisor using Euclidean algorithm
+// Note: We compute remainder manually since rem is an infix operator in Erlang
+function @remainder(@a: int, @b: int) -> int {
+    @start:
+    @quotient = div @a @b
+    @product = mul @quotient @b
+    @rem = sub @a @product
+  ret @rem
+}
+  
+export function @gcd(@a: int, @b: int) -> int {
+    @start:
+    @zero = const 0
+    @is_b_zero = cmp eq @b @zero
+  jump_if @is_b_zero @return_a @recursive
+  
+    @return_a:
+  ret @a
+  
+    @recursive:
+    @rem = call @remainder(@a, @b)
+    @result = call @gcd(@b, @rem)
+  ret @result
+}
+  
+export function @main() -> int {
+    @start:
+    @a = const 48
+    @b = const 18
+    @result = call @gcd(@a, @b)
+  ret @result
+}

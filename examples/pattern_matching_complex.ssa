@@ -1,0 +1,37 @@
+module @pattern_matching_complex
+  
+export function @classify_number(@n: int) -> atom {
+    @entry:
+    match @n { 0: @zero, 1: @one, 2: @two, @x: @general }
+  
+    @zero:
+    ret atom zero
+  
+    @one:
+    ret atom one
+  
+    @two:
+    ret atom two
+  
+    @general:
+    ret atom other
+}
+  
+export function @fibonacci(@n: int) -> int {
+    @entry:
+    match @n { 0: @fib_0, 1: @fib_1, @num: @fib_n }
+  
+    @fib_0:
+    ret 0
+  
+    @fib_1:
+    ret 1
+  
+    @fib_n:
+    @n_minus_1 = sub @num 1
+    @n_minus_2 = sub @num 2
+    @fib_n1 = call @fibonacci(@n_minus_1)
+    @fib_n2 = call @fibonacci(@n_minus_2)
+    @result = add @fib_n1 @fib_n2
+    ret @result
+}

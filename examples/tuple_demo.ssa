@@ -1,0 +1,42 @@
+module @tuples
+  
+// Create a point tuple (x, y)
+function @make_point(@x: int, @y: int) -> tuple {
+    @start:
+    @point = tuple 2 @x @y
+  ret @point
+}
+  
+// Get x coordinate from point
+function @point_x(@point: tuple) -> int {
+    @start:
+    @x = tuple_get @point 0
+  ret @x
+}
+  
+// Get y coordinate from point
+function @point_y(@point: tuple) -> int {
+    @start:
+    @y = tuple_get @point 1
+  ret @y
+}
+  
+// Calculate distance squared: x^2 + y^2
+export function @distance_squared(@point: tuple) -> int {
+    @start:
+    @x = call @point_x(@point)
+    @y = call @point_y(@point)
+    @x_squared = mul @x @x
+    @y_squared = mul @y @y
+    @result = add @x_squared @y_squared
+  ret @result
+}
+  
+export function @main() -> int {
+    @start:
+    @three = const 3
+    @four = const 4
+    @point = call @make_point(@three, @four)
+    @dist_sq = call @distance_squared(@point)
+  ret @dist_sq
+}

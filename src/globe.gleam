@@ -1,5 +1,7 @@
-import gleam/io
+import globe/cli
 
-pub fn main() {
-  io.println("Hello from globe!")
+const version = "1.0.0"
+
+pub fn main() -> Nil {
+  cli.run(version)
 }

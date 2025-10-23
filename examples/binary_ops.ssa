@@ -1,0 +1,37 @@
+module @binary_ops
+  
+// Demonstrate binary operations
+  
+export function @concat_strings(@s1: string, @s2: string) -> string {
+    @start:
+    @result = binary_concat @s1 @s2
+  ret @result
+}
+  
+export function @string_length(@str: string) -> int {
+    @start:
+    @len = binary_size @str
+  ret @len
+}
+  
+export function @substring(@str: string, @pos: int, @len: int) -> string {
+    @start:
+    @sub = binary_slice @str @pos @len
+  ret @sub
+}
+  
+export function @main() -> int {
+    @start:
+    @hello = const "Hello, "
+    @world = const "World!"
+    @greeting = call @concat_strings(@hello, @world)
+  
+    @len = call @string_length(@greeting)
+  
+    @zero = const 0
+    @seven = const 7
+    @five = const 5
+    @sub = call @substring(@greeting, @zero, @seven)
+  
+  ret @len
+}
